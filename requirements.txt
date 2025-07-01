@@ -4,3 +4,4 @@ langchain_experimental
 pandas
 fastapi
 uvicorn
+tabulate
