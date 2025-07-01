@@ -20,4 +20,6 @@ def create_db(conn):
 
 if __name__ == '__main__':
     print("Creating Databse")
-    create_db()
+    conn = sqlite3.connect('chat_history.db')
+    create_db(conn)
+    conn.close()

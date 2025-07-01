@@ -15,7 +15,8 @@ class SpreadsheetAgent:
 
     def __init__(self) -> None:
         load_dotenv()
-        df = pd.read_csv(os.getenv('SPREADSHEET_URL'))
+        #df = pd.read_csv(os.getenv('SPREADSHEET_URL'))
+        df = pd.read_csv('sheet.csv')
         self.agent = create_pandas_dataframe_agent(
             ChatOpenAI(api_key=os.getenv('OPENAI_API_KEY'), temperature=0, model="gpt-4o"),
             df,

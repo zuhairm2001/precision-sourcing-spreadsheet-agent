@@ -17,7 +17,7 @@ export default function ChatInterface() {
   useEffect(() => {
     const fetchChatHistory = async () => {
       try {
-        const response = await fetch("http://localhost:8000/get");
+        const response = await fetch("/get");
         const historyData: ChatHistoryList = await response.json();
         // Transform backend ChatHistory to frontend Message format
         const transformedMessages: Message[] = historyData.history.flatMap((chat: ChatHistory) => [
@@ -61,7 +61,7 @@ export default function ChatInterface() {
     setIsLoading(true)
 
     try {
-      const response = await fetch("http://localhost:8000/chat", {
+      const response = await fetch("/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
