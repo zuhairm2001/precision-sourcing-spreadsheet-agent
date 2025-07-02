@@ -13,37 +13,37 @@ export default function ChatInterface() {
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
-
-  useEffect(() => {
-    const fetchChatHistory = async () => {
-      try {
-        const response = await fetch("/get");
-        const historyData: ChatHistoryList = await response.json();
-        // Transform backend ChatHistory to frontend Message format
-        const transformedMessages: Message[] = historyData.history.flatMap((chat: ChatHistory) => [
-          {
-            id: `user-${chat.user_timestamp}`,
-            role: "user" as const,
-            content: chat.user_message.message,
-            timestamp: new Date(chat.user_timestamp)
-          },
-          {
-            id: `system-${chat.agent_timestamp}`,
-            role: "system" as const,
-            content: chat.agent_message.message,
-            timestamp: new Date(chat.agent_timestamp)
-          }
-        ]);
-        
-        setMessages(transformedMessages);
-      } catch (error) {
-        console.error('Failed to fetch chat history:', error);
-      }
-    };
-
-    fetchChatHistory();
-  }, []);
-
+  //Use Effect hook to get the chat history from the stored sqlite database in the backend 
+  //useEffect(() => {
+  //  const fetchChatHistory = async () => {
+  //    try {
+  //      const response = await fetch("/get");
+  //      const historyData: ChatHistoryList = await response.json();
+  //      // Transform backend ChatHistory to frontend Message format
+  //      const transformedMessages: Message[] = historyData.history.flatMap((chat: ChatHistory) => [
+  //        {
+  //          id: `user-${chat.user_timestamp}`,
+  //          role: "user" as const,
+  //          content: chat.user_message.message,
+  //          timestamp: new Date(chat.user_timestamp)
+  //        },
+  //        {
+  //          id: `system-${chat.agent_timestamp}`,
+  //          role: "system" as const,
+  //          content: chat.agent_message.message,
+  //          timestamp: new Date(chat.agent_timestamp)
+  //        }
+  //      ]);
+  //
+  //      setMessages(transformedMessages);
+  //    } catch (error) {
+  //      console.error('Failed to fetch chat history:', error);
+  //    }
+  //  };
+  //
+  //  fetchChatHistory();
+  //}, []);
+  //
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -106,7 +106,7 @@ export default function ChatInterface() {
     <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
       <Card className="w-full max-w-2xl h-[600px] flex flex-col">
         <ChatHeader />
-        <CardContent className="flex-1 p-0">
+        <CardContent className="flex-1 p-0 overflow-hidden">
           <MessageList messages={messages} isLoading={isLoading} />
         </CardContent>
         <CardFooter className="flex-shrink-0 p-4 border-t">

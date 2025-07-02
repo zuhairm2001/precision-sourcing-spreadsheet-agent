@@ -2,15 +2,20 @@ import type { Message } from "@/app/types"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { MessageItem } from "./MessageItem"
 import { LoadingIndicator } from "./LoadingIndicator"
+import { useEffect, useRef } from "react"
 
 interface MessageListProps {
   messages: Message[]
   isLoading: boolean
 }
 
-
-
 export function MessageList({ messages, isLoading }: MessageListProps) {
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [messages])
+
   return (
     <ScrollArea className="h-full px-6">
       <div className="space-y-4 py-4">
@@ -23,6 +28,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
         ))}
 
         {isLoading && <LoadingIndicator />}
+        <div ref={messagesEndRef} />
       </div>
     </ScrollArea>
   )
